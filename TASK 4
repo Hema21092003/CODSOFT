@@ -1,0 +1,46 @@
+import java.util.*;
+
+public class RecommendationSystem {
+
+    // A map to store movies by genre
+    private static Map<String, List<String>> movieDatabase = new HashMap<>();
+
+    public static void main(String[] args) {
+        // Populate the movie database with some sample data
+        populateMovieDatabase();
+
+        // Get user preferences (e.g., preferred genres)
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to the Movie Recommendation System!");
+        System.out.print("Enter your preferred genre (e.g., action, comedy, drama): ");
+        String preferredGenre = scanner.nextLine().toLowerCase();
+
+        // Generate recommendations based on user preferences
+        List<String> recommendations = getRecommendations(preferredGenre);
+
+        // Display the recommendations
+        if (recommendations.isEmpty()) {
+            System.out.println("Sorry, no recommendations are available for the selected genre.");
+        } else {
+            System.out.println("Recommended movies for the genre \"" + preferredGenre + "\":");
+            for (String movie : recommendations) {
+                System.out.println("- " + movie);
+            }
+        }
+
+        scanner.close();
+    }
+
+    private static void populateMovieDatabase() {
+        movieDatabase.put("action", Arrays.asList("Mad Max: Fury Road", "John Wick", "The Dark Knight"));
+        movieDatabase.put("comedy", Arrays.asList("Superbad", "The Hangover", "Step Brothers"));
+        movieDatabase.put("drama", Arrays.asList("The Shawshank Redemption", "Forrest Gump", "The Godfather"));
+        movieDatabase.put("horror", Arrays.asList("The Conjuring", "Get Out", "A Nightmare on Elm Street"));
+        movieDatabase.put("romance", Arrays.asList("Titanic", "Pride and Prejudice", "The Notebook"));
+        movieDatabase.put("sci-fi", Arrays.asList("Inception", "The Matrix", "Interstellar"));
+    }
+
+    private static List<String> getRecommendations(String genre) {
+        return movieDatabase.getOrDefault(genre, Collections.emptyList());
+    }
+}
