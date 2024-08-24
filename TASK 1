@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rule-Based Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #chatbox {
+            width: 300px;
+            height: 500px;
+            border: 2px solid #333;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 10px;
+        }
+        #messages {
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+        .message {
+            margin: 5px 0;
+        }
+        .user-message {
+            text-align: right;
+        }
+        .bot-message {
+            text-align: left;
+        }
+        #input-area {
+            display: flex;
+        }
+        #user-input {
+            flex-grow: 1;
+            padding: 10px;
+        }
+        #send-btn {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chatbox">
+    <div id="messages"></div>
+    <div id="input-area">
+        <input type="text" id="user-input" placeholder="Type a message...">
+        <button id="send-btn">Send</button>
+    </div>
+</div>
+
+<script>
+    const sendBtn = document.getElementById('send-btn');
+    const userInput = document.getElementById('user-input');
+    const messages = document.getElementById('messages');
+
+    sendBtn.addEventListener('click', function() {
+        const userMessage = userInput.value;
+        if (userMessage) {
+            appendMessage('user-message', userMessage);
+            userInput.value = '';
+            respond(userMessage);
+        }
+    });
+
+    function appendMessage(type, message) {
+        const messageElement = document.createElement('div');
+        messageElement.className = `message ${type}`;
+        messageElement.textContent = message;
+        messages.appendChild(messageElement);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function respond(userMessage) {
+        let botMessage = '';
+
+        // Rule-based responses
+        if (userMessage.toLowerCase().includes('hello')) {
+            botMessage = 'Hello! How can I help you today?';
+        } else if (userMessage.toLowerCase().includes('how are you')) {
+            botMessage = 'I am just a bot, but I am doing great! How about you?';
+        } else if (userMessage.toLowerCase().includes('your name')) {
+            botMessage = 'I am a simple chatbot created to assist you.';
+        } else if (userMessage.toLowerCase().includes('bye')) {
+            botMessage = 'Goodbye! Have a nice day!';
+        } else {
+            botMessage = 'I am sorry, I do not understand that.';
+        }
+
+        appendMessage('bot-message', botMessage);
+    }
+</script>
+
+</body>
+</html>
